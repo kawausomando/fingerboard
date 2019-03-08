@@ -4,11 +4,10 @@
     <title>指板を表示する</title>
     <link rel="stylesheet" href="./reset_css.css" type="text/css" />
     <link rel="stylesheet" href="./finger_bord.css" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
-    <div id="app" class="container">
+    <div class="container">
         <header class="title">
             <h1>指板プロット作成ツール</h1>
         </header>
@@ -28,11 +27,6 @@
                 <div class="FP-field">
                     <div class="fingerprint-wrapper">
                         <div class="finger-plot">
-                            <string-course
-                                v-for="numberOfString in numberOfStrings"
-                                v-bind:plot="plot"
-                                v-bind:key="numberOfString.key"
-                            ></string-course>
                             <div class="string-course">
                                 <div class="plot hide"></div>
                                 <div class="plot hide"></div>
@@ -125,11 +119,6 @@
             <p>&copy;kawausomando.com</p>
         </footer>
     </div>
-
-
-    <script>
-        Vue.component()
-    </script>
 </body>
 
 </html>
