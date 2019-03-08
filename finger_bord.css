@@ -1,0 +1,111 @@
+/*** 基本設定 ***/
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+/****** 全体のレイアウト ******/
+.container {
+    display: grid;
+    grid-template-rows: 250px 1fr 25px;
+}
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: orange;
+    color: white;
+    margin-bottom: 15px;
+}
+section.main {
+    display: flex;
+    justify-content: center;
+}
+footer {
+    display: flex;
+    justify-content: center;
+}
+
+/****** コンテンツ ******/
+.FP-section {
+    width: 500px;
+    height: 500px;
+}
+/* ツールバー */
+.FB-section {
+    padding-bottom: 15px; 
+    height: 30px;
+}
+.FB-section .left-items {
+    float: left;
+}
+.FB-section .right-items {
+    float: right;
+}
+.FB-section .left-items button, .FB-section .right-items button {
+    float: left;
+    margin-right: 5px;
+}
+/* 指板プロット */
+/* 指板プロット ラッパー */
+.fingerprint-wrapper {
+    position: relative;
+}
+/* 指板プロット 指板 */
+.FP-field {
+    height: 100%;
+    padding-left: 100px;
+}
+.string-course {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.fingerprint {
+    position: relative;
+}
+.fingerprint .string-course {
+    border-left: 5px black solid;
+}
+.string-course.top .string-course-block {
+    border-top: 1px black solid;
+}
+.string-course.bottom .string-course-block {
+    border-bottom: 1px black solid;
+}
+.string-course-block {
+    border-right: 1px black solid;
+    width: 50px;
+    height: 50px;
+}
+.string-course-block.has-string {
+    border-bottom: 3px gray solid;
+}
+/* 指板プロット プロット */
+.finger-plot {
+    position: absolute;
+    top: 25px;
+    left: -25px;
+    z-index: 9999999;
+}
+.finger-plot .string-course {
+    border-style: 1px black solid;
+}
+.finger-plot .string-course .plot {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+.finger-plot .string-course .plot.hide:hover {
+    border: 1px black dotted;
+}
+.finger-plot .string-course .plot.show {
+    border: 1px black dotted;
+}

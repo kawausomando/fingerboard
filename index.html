@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>指板を表示する</title>
+        <!-- 開発バージョン、便利なコンソールの警告が含まれています -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <ol>
+                <todo-item 
+                    v-for="item in groceryList"
+                    v-bind:todo="item"
+                    v-bind:key="item.id"
+                ></todo-item>
+            </ol>
+        </div>
+
+        <script>
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                groceryList: [
+                    {id: 0, text: 'Vegetables'},
+                    {id: 1, text: 'Cheese'},
+                    {id: 2, text: '何か食べるもの'}
+                ]
+            }
+        });
+        </script>
+    </body>
+</html>
