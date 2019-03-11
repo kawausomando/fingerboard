@@ -65,7 +65,7 @@ var document_onload = function() {
         v-on:input="$emit('input', $event.target.value)"
       ></input>`
   });
-  /* select mode*/
+  /* select mode */
   Vue.component('select-mode', {
     props: ['value'],
     template: `
@@ -75,6 +75,16 @@ var document_onload = function() {
         <option>plot</option>
         <option>editText</option>
       </select>`
+  });
+  /*  */
+  Vue.component('select-number-of-flets', {
+    props: ['onChangeNumberOfFlets'],
+    template: `
+      <input
+        type="number"
+        value="6"
+        v-on:input="onChangeNumberOfFlets">
+      </input>`
   });
 
   /***** Directives *****/
@@ -146,6 +156,32 @@ var document_onload = function() {
       },
       editText: function(plot, target) {
         plot.edit = true;
+      },
+      onChangeNumberOfFlets: function(event) {
+        var input = parseInt(event.target.value);
+        if (input >= 1) {
+          this.setFlets(input);
+          this.setPlotMap(input)
+        }
+      },
+      setFlets: function(numberOfFlet) {
+        this.flets = new Array(numberOfFlet).fill(null).map(function(arr, index) {
+          return {fletNumber: index};
+        });
+      },
+      setPlotMap: function(numberOfFlet) {
+        this.numberOfStrings = this.numberOfStrings.map(function(numberOfString) {
+          var newPlotMap = new Array(numberOfFlet).fill(null).map(function(arr, index) {
+            if (numberOfString.plotMap[index]) {
+              return numberOfString.plotMap[index];
+            } else {
+              return {display: 'hide', text: '', edit: false};
+            }
+          });
+          numberOfString.plotMap = newPlotMap;
+          return numberOfString;
+        });
+        debugger;
       }
     }
   });

@@ -18,8 +18,10 @@
             <div class="FP-section">
                 <div class="FB-section">
                     <div class="left-items">
-                        <!-- <button>弦の数</button> -->
                         <select-mode v-model="mode"></select-mode>
+                        <select-number-of-flets
+                            v-bind:on-change-number-of-flets="onChangeNumberOfFlets"
+                        ></select-number-of-flets>
                         <color-picker v-model="plotColor"></color-picker>
                         <!-- <button>画像として保存</button> -->
                     </div>

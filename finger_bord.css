@@ -33,7 +33,6 @@ footer {
 
 /****** コンテンツ ******/
 .FP-section {
-    width: 500px;
     height: 500px;
 }
 /* ツールバー */
@@ -59,7 +58,6 @@ footer {
 /* 指板プロット 指板 */
 .FP-field {
     height: 100%;
-    padding-left: 100px;
 }
 .string-course {
     display: flex;
