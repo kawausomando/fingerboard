@@ -42,6 +42,7 @@
                         <div class="fingerprint">
                             <finger-prints
                                 v-for="numberOfCourse in numberOfCourses"
+                                v-bind:flets="flets"
                                 v-bind:position="numberOfCourse.position"
                                 v-bind:has-string="numberOfCourse.hasString"
                                 v-bind:key="numberOfCourse.key"

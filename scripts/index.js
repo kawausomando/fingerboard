@@ -33,7 +33,8 @@ var document_onload = function() {
   Vue.component('finger-prints', {
     props: {
       hasString: Boolean,
-      position: String
+      position: String,
+      flets: Array
     },
     data: function() {
       hasStringClass = (this.hasString) ? 'has-string' : '';
@@ -43,14 +44,15 @@ var document_onload = function() {
     },
     template:
       `<div :class="'string-course ' + position">
-        <div :class="'string-course-block ' + hasStringClass"></div>
-        <div :class="'string-course-block ' + hasStringClass"></div>
-        <div :class="'string-course-block ' + hasStringClass"></div>
-        <div :class="'string-course-block ' + hasStringClass"></div>
-        <div :class="'string-course-block ' + hasStringClass"></div>
-        <div :class="'string-course-block ' + hasStringClass"></div>
-        <div :class="'string-course-block ' + hasStringClass"></div>
+        <string-course-block
+          v-for="flet in flets"
+          v-bind:key="flet.key"
+        ></string-course-block>
       </div>`
+  });
+  Vue.component('string-course-block', {
+    props: [],
+    template: `<div class="string-course-block has-string"></div>`
   });
 
   /*** ToolBar ***/
@@ -97,6 +99,7 @@ var document_onload = function() {
       };
     });
   }(intialNumberOfString, intialNumberOfFlet));
+
   var numberOfCourses = (function(intialNumberOfString) {
     var courses = new Array(intialNumberOfString - 1).fill(null).map(function() {
       return {hasString: true, position: ''};
@@ -105,12 +108,19 @@ var document_onload = function() {
     return courses;
   }(intialNumberOfString));
 
+  var flets = (function(intialNumberOfFlet) {
+    return new Array(intialNumberOfFlet).fill(null).map(function(arr, index) {
+      return {fletNumber: index};
+    });
+  }(intialNumberOfFlet));
+
   /*** Vue ***/
   var app = new Vue({
     el: "#app",
     data: {
       numberOfStrings: numberOfStrings,
       numberOfCourses: numberOfCourses,
+      flets: flets,
       plotColor: '#3399ff',
       mode: 'plot'
     },
@@ -135,7 +145,6 @@ var document_onload = function() {
         }
       },
       editText: function(plot, target) {
-        debugger;
         plot.edit = true;
       }
     }
