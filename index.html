@@ -1,36 +1,72 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>指板を表示する</title>
-        <!-- 開発バージョン、便利なコンソールの警告が含まれています -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    </head>
-    <body>
-        <div id="app">
-            <ol>
-                <todo-item 
-                    v-for="item in groceryList"
-                    v-bind:todo="item"
-                    v-bind:key="item.id"
-                ></todo-item>
-            </ol>
-        </div>
+<head>
+    <title>指板を表示する</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./reset_css.css" type="text/css" />
+    <link rel="stylesheet" href="./finger_bord.css" type="text/css" />
+    <link rel="shortcut icon" href="./favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./scripts/index.js"></script>
+</head>
 
-        <script>
-        Vue.component('todo-item', {
-            props: ['todo'],
-            template: '<li>{{todo.text}}</li>'
-        });
-        var app = new Vue({
-            el: '#app',
-            data: {
-                groceryList: [
-                    {id: 0, text: 'Vegetables'},
-                    {id: 1, text: 'Cheese'},
-                    {id: 2, text: '何か食べるもの'}
-                ]
-            }
-        });
-        </script>
-    </body>
+<body onload="document_onload()">
+    <div id="app" class="container">
+        <header class="title">
+            <h1>指板プロット作成ツール</h1>
+        </header>
+        <section class="main">
+            <div class="FP-section">
+                <div class="FB-section">
+                    <div class="left-items">
+                        <span class="label">モード </span>
+                        <select-mode v-model="mode"></select-mode>
+                        <span class="label">フレット数 </span>
+                        <select-number-of-flets
+                            v-bind:on-change-number-of-flets="onChangeNumberOfFlets"
+                        ></select-number-of-flets>
+                        <span class="label">弦の数 </span>
+                        <number-of-strings
+                            v-bind:on-change-number-of-strings="onChangeNumberOfStrings">
+                        </number-of-strings>
+                        <span class="label">プロットの色 </span>
+                        <color-picker v-model="plotColor"></color-picker>
+                        <button v-on:click="onReset">リセット</button>
+                        <!-- <button>画像として保存</button> -->
+                    </div>
+                    <div class="right-items">
+                        <!-- <button>-</button> -->
+                        <!-- <button>+</button> -->
+                    </div>
+                </div>
+                <div class="FP-field">
+                    <div class="fingerprint-wrapper">
+                        <div class="finger-plot">
+                            <finger-plots
+                                v-for="numberOfString in numberOfStrings"
+                                v-bind:plot-map="numberOfString.plotMap"
+                                v-bind:on-click-plot="onClickPlot"
+                                v-bind:key="numberOfString.key"
+                            >
+                            </finger-plots>
+                        </div>
+                        <div class="fingerprint">
+                            <finger-prints
+                                v-for="numberOfCourse in numberOfCourses"
+                                v-bind:flets="flets"
+                                v-bind:position="numberOfCourse.position"
+                                v-bind:has-string="numberOfCourse.hasString"
+                                v-bind:key="numberOfCourse.key"
+                            >
+                            </finger-prints>
+                        </div>
+                    </div>
+            </div>
+        </section>
+        <footer>
+            <p>&copy;kawausomando.com</p>
+        </footer>
+    </div>
+</body>
+
 </html>

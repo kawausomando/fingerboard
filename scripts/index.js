@@ -19,6 +19,7 @@ var document_onload = function() {
     template:
       `<div
         :class="'plot '  + plot.display"
+        :style="'background:' + plot.color + ';'"
         v-on:click="onClickPlot(plot, $event.target)">
         <span v-if="plot.edit === false" v-text="plot.text"></span>
         <input
@@ -76,7 +77,7 @@ var document_onload = function() {
         <option>editText</option>
       </select>`
   });
-  /*  */
+  /* numberOfFlets */
   Vue.component('select-number-of-flets', {
     props: ['onChangeNumberOfFlets'],
     template: `
@@ -86,6 +87,17 @@ var document_onload = function() {
         v-on:input="onChangeNumberOfFlets">
       </input>`
   });
+  /* numberOfStrings */
+  Vue.component('number-of-strings', {
+    props: ['onChangeNumberOfStrings'],
+    template: `
+      <input
+        type="number"
+        value="6"
+        v-on:input="onChangeNumberOfStrings">
+      </input>`
+  });
+
 
   /***** Directives *****/
   Vue.directive('auto-focus', {
@@ -103,7 +115,7 @@ var document_onload = function() {
       return {
         plotMap: (function(intialNumberOfFlet) {
           return new Array(intialNumberOfFlet).fill(null).map(function() {
-            return {display: 'hide', text: '', edit: false};
+            return {display: 'hide', text: '', edit: false, color: ''};
           });
         }(intialNumberOfFlet))
       };
@@ -147,14 +159,14 @@ var document_onload = function() {
       togglePlot: function(plot, target) {
         if (plot.display === 'hide') {
           plot.display = 'show';
-          target.style.background = this.plotColor;
+          plot.color = this.plotColor;
         } else {
           plot.display = 'hide';
-          target.style.background = '';
+          plot.color = '';
           plot.text = '';
         }
       },
-      editText: function(plot, target) {
+      editText: function(plot) {
         plot.edit = true;
       },
       onChangeNumberOfFlets: function(event) {
@@ -175,13 +187,42 @@ var document_onload = function() {
             if (numberOfString.plotMap[index]) {
               return numberOfString.plotMap[index];
             } else {
-              return {display: 'hide', text: '', edit: false};
+              return {display: 'hide', text: '', edit: false, color: ''};
             }
           });
           numberOfString.plotMap = newPlotMap;
           return numberOfString;
         });
-        debugger;
+      },
+      onChangeNumberOfStrings: function(event) {
+        var input = parseInt(event.target.value);
+        if (input >= 1) {
+          if (confirm('弦の本数を変更するとプロットはリセットされます')) {
+            this.setStrings(input, this.flets.length);
+            this.setCourses(input);
+          }
+        }
+      },
+      setStrings: function(numberOfStrings, numberOfFlets) {
+        this.numberOfStrings = new Array(numberOfStrings).fill(null).map(function() {
+          return {
+            plotMap: (function(numberOfFlets) {
+              return new Array(numberOfFlets).fill(null).map(function() {
+                return {display: 'hide', text: '', edit: false, color: ''};
+              });
+            }(numberOfFlets))
+          };
+        });
+      },
+      setCourses: function(numberOfStrings) {
+        this.numberOfCourses = new Array(numberOfStrings - 1).fill(null).map(function() {
+          return {hasString: true, position: ''};
+        });
+        this.numberOfCourses[0].position = 'top';
+      },
+      onReset: function() {
+        this.setStrings(this.numberOfStrings.length, this.flets.length);
+        this.setCourses(this.numberOfStrings.length);
       }
     }
   });

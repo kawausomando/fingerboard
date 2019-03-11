@@ -27,18 +27,15 @@ section.main {
     justify-content: center;
 }
 footer {
+    margin-top: 100px;
     display: flex;
     justify-content: center;
 }
 
 /****** コンテンツ ******/
-.FP-section {
-    height: 500px;
-}
 /* ツールバー */
 .FB-section {
     margin-bottom: 50px;
-    height: 30px;
 }
 .FB-section .left-items {
     float: left;
@@ -47,9 +44,15 @@ footer {
     float: right;
 }
 .FB-section .left-items button, .FB-section .right-items button {
-    float: left;
     margin-right: 5px;
 }
+.FB-section .label span {
+    font-size: 12px;
+}
+.FB-section input[type="number"] {
+    width: 25px;
+}
+
 /* 指板プロット */
 /* 指板プロット ラッパー */
 .fingerprint-wrapper {
