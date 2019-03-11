@@ -1,6 +1,7 @@
 var document_onload = function() {
   /***** Compontents *****/
   /*** Main ***/
+  /* plot wrapper */
   Vue.component('finger-plots', {
     props: ['plotMap', 'togglePlot'],
     template:
@@ -22,6 +23,7 @@ var document_onload = function() {
         <span>{{plot.text}}</span>
       </div>`
   });
+  /* finger-prints*/
   Vue.component('finger-prints', {
     props: {
       hasString: Boolean,
@@ -45,6 +47,7 @@ var document_onload = function() {
       </div>`
   });
 
+  /*** ToolBar ***/
   /* color picker */
   Vue.component('color-picker', {
     props: ['value'],
@@ -56,8 +59,9 @@ var document_onload = function() {
   });
 
   /***** Models *****/
+  /*** initialize ***/
   var intialNumberOfFlet = 7;
-  var intialNumberOfString = 4;
+  var intialNumberOfString = 6;
   var numberOfStrings = (function(intialNumberOfString, intialNumberOfFlet) {
     return new Array(intialNumberOfString).fill(null).map(function() {
       return {
@@ -70,22 +74,20 @@ var document_onload = function() {
     });
   }(intialNumberOfString, intialNumberOfFlet));
   var numberOfCourses = (function(intialNumberOfString) {
-    var courses = new Array(intialNumberOfString).fill(null).map(function() {
-
+    var courses = new Array(intialNumberOfString + 1).fill(null).map(function() {
+      return {hasString: true, position: ''};
     });
+    courses[0].position = 'top';
+    courses[courses.length - 1].position = 'bottom';
+    return courses;
   }(intialNumberOfString));
 
+  /*** Vue ***/
   var app = new Vue({
     el: "#app",
     data: {
       numberOfStrings: numberOfStrings,
-      numberOfCourses: [
-        {hasString: true, position: 'top'},
-        {hasString: true, position: ''},
-        {hasString: true, position: ''},
-        {hasString: true, position: ''},
-        {hasString: false, position: 'bottom'},
-      ],
+      numberOfCourses: numberOfCourses,
       plotColor: '#3399ff',
       mode: 'plot'
     },
