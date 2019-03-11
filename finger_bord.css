@@ -38,7 +38,7 @@ footer {
 }
 /* ツールバー */
 .FB-section {
-    padding-bottom: 15px;
+    margin-bottom: 50px;
     height: 30px;
 }
 .FB-section .left-items {
@@ -73,10 +73,7 @@ footer {
     border-left: 5px black solid;
 }
 .string-course.top .string-course-block {
-    border-top: 1px black solid;
-}
-.string-course.bottom .string-course-block {
-    border-bottom: 1px black solid;
+    border-top:  3px gray solid;
 }
 .string-course-block {
     border-right: 1px black solid;
@@ -89,7 +86,7 @@ footer {
 /* 指板プロット プロット */
 .finger-plot {
     position: absolute;
-    top: 25px;
+    top: -25px;
     left: -25px;
     z-index: 9999999;
 }
@@ -100,8 +97,10 @@ footer {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    margin-left: 1px;
-    margin-top: 1px;
+    padding-right: 1px;
+    padding-right: 1px;
+    padding-top: 1.5px;
+    padding-bottom: 1.5px;
     text-align: center;
 }
 .finger-plot .string-course .plot.hide:hover {

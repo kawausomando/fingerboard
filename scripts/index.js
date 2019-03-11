@@ -98,11 +98,10 @@ var document_onload = function() {
     });
   }(intialNumberOfString, intialNumberOfFlet));
   var numberOfCourses = (function(intialNumberOfString) {
-    var courses = new Array(intialNumberOfString + 1).fill(null).map(function() {
+    var courses = new Array(intialNumberOfString - 1).fill(null).map(function() {
       return {hasString: true, position: ''};
     });
     courses[0].position = 'top';
-    courses[courses.length - 1].position = 'bottom';
     return courses;
   }(intialNumberOfString));
 
