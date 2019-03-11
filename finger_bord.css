@@ -38,7 +38,7 @@ footer {
 }
 /* ツールバー */
 .FB-section {
-    padding-bottom: 15px; 
+    padding-bottom: 15px;
     height: 30px;
 }
 .FB-section .left-items {
@@ -102,10 +102,19 @@ footer {
     height: 50px;
     margin-left: 1px;
     margin-top: 1px;
+    text-align: center;
 }
 .finger-plot .string-course .plot.hide:hover {
     border: 1px black dotted;
 }
+.finger-plot .string-course .plot.hide span {
+    display: none;
+}
 .finger-plot .string-course .plot.show {
-    border: 1px black dotted;
+    border: 1px black solid;
+}
+.finger-plot .string-course .plot.show span {
+    display: block;
+    line-height: 50px;
+    pointer-events: none;
 }

@@ -4,10 +4,12 @@
     <title>指板を表示する</title>
     <link rel="stylesheet" href="./reset_css.css" type="text/css" />
     <link rel="stylesheet" href="./finger_bord.css" type="text/css" />
+    <link rel="shortcut icon" href="./favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./scripts/index.js"></script>
 </head>
 
-<body>
+<body onload="document_onload()">
     <div id="app" class="container">
         <header class="title">
             <h1>指板プロット作成ツール</h1>
@@ -16,13 +18,14 @@
             <div class="FP-section">
                 <div class="FB-section">
                     <div class="left-items">
-                        <button>弦の数</button>
-                        <button>色</button>
-                        <button>画像として保存</button>
+                        <!-- <button>弦の数</button> -->
+                        <!-- <select-mode v-model="mode"></select-mode> -->
+                        <color-picker v-model="plotColor"></color-picker>
+                        <!-- <button>画像として保存</button> -->
                     </div>
                     <div class="right-items">
-                        <button>-</button>
-                        <button>+</button>
+                        <!-- <button>-</button> -->
+                        <!-- <button>+</button> -->
                     </div>
                 </div>
                 <div class="FP-field">
@@ -30,13 +33,12 @@
                         <div class="finger-plot">
                             <finger-plots
                                 v-for="numberOfString in numberOfStrings"
-                                v-bind:plot-map="plotMap"
-                                v-bind:on-click-plot="onClickPlot"
+                                v-bind:plot-map="numberOfString.plotMap"
+                                v-bind:toggle-plot="togglePlot"
                                 v-bind:key="numberOfString.key"
                             >
                             </finger-plots>
                         </div>
-        
                         <div class="fingerprint">
                             <finger-prints
                                 v-for="numberOfCourse in numberOfCourses"
@@ -53,82 +55,6 @@
             <p>&copy;kawausomando.com</p>
         </footer>
     </div>
-
-
-    <script>
-        Vue.component('finger-plots', {
-            props: ['plotMap', 'onClickPlot'],
-            template: 
-                `<div class="string-course">
-                    <plot
-                        v-for="plot in plotMap"
-                        v-bind:display="plot.display"
-                        v-bind:key="plot.key"
-                        v-bind:on-click-plot="onClickPlot"
-                    ></plot>
-                </div>`
-        });
-        Vue.component('plot', {
-            props: ['display', 'onClickPlot'],
-            template: '<div class="plot hide" v-on:click="onClickPlot"></div>'
-        });
-        Vue.component('finger-prints', {
-            props: {
-                hasString: Boolean,
-                position: String
-            },
-            data: function() {
-                hasStringClass = (this.hasString) ? 'has-string' : '';
-                return {
-                    hasStringClass: hasStringClass
-                };
-            },
-            template: 
-                `<div :class="'string-course ' + position">
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                    <div :class="'string-course-block ' + hasStringClass"></div>
-                </div>`
-        });
-
-        var app = new Vue({
-            el: "#app",
-            data: {
-                numberOfStrings: [
-                    {},
-                    {},
-                    {},
-                    {}
-                ],
-                plotMap: [
-                    {display: 'hide'},
-                    {display: 'hide'},
-                    {display: 'hide'},
-                    {display: 'hide'},
-                    {display: 'hide'},
-                    {display: 'hide'},
-                    {display: 'hide'}
-                ],
-                numberOfCourses: [
-                    {hasString: true, position: 'top'},
-                    {hasString: true, position: ''},
-                    {hasString: true, position: ''},
-                    {hasString: true, position: ''},
-                    {hasString: false, position: 'bottom'},
-                ]
-            },
-            methods: {
-                onClickPlot: function(event) {
-                    debugger;
-                    this.plotMap[0].display = 'show';
-                }
-            }
-        })
-    </script>
 </body>
 
 </html>
