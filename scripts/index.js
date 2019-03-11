@@ -3,24 +3,30 @@ var document_onload = function() {
   /*** Main ***/
   /* plot wrapper */
   Vue.component('finger-plots', {
-    props: ['plotMap', 'togglePlot'],
+    props: ['plotMap', 'onClickPlot'],
     template:
       `<div class="string-course">
         <plot
           v-for="plot in plotMap"
           v-bind:plot="plot"
           v-bind:key="plot.key"
-          v-bind:toggle-plot="togglePlot"
+          v-bind:on-click-plot="onClickPlot"
         ></plot>
       </div>`
   });
   Vue.component('plot', {
-    props: ['plot', 'togglePlot'],
+    props: ['plot', 'onClickPlot'],
     template:
       `<div
         :class="'plot '  + plot.display"
-        v-on:click="togglePlot(plot, $event.target)">
-        <span>{{plot.text}}</span>
+        v-on:click="onClickPlot(plot, $event.target)">
+        <span v-if="plot.edit === false" v-text="plot.text"></span>
+        <input
+          v-if="plot.edit === true"
+          v-model="plot.text"
+          v-on:blur="plot.edit = false"
+          v-auto-focus>
+        </input>
       </div>`
   });
   /* finger-prints*/
@@ -57,6 +63,24 @@ var document_onload = function() {
         v-on:input="$emit('input', $event.target.value)"
       ></input>`
   });
+  /* select mode*/
+  Vue.component('select-mode', {
+    props: ['value'],
+    template: `
+      <select
+        v-bind:value='value'
+        v-on:input="$emit('input', $event.target.value)">
+        <option>plot</option>
+        <option>editText</option>
+      </select>`
+  });
+
+  /***** Directives *****/
+  Vue.directive('auto-focus', {
+    inserted: function (el) {
+      el.focus();
+    }
+  });
 
   /***** Models *****/
   /*** initialize ***/
@@ -67,7 +91,7 @@ var document_onload = function() {
       return {
         plotMap: (function(intialNumberOfFlet) {
           return new Array(intialNumberOfFlet).fill(null).map(function() {
-            return {display: 'hide', text: 'R'};
+            return {display: 'hide', text: '', edit: false};
           });
         }(intialNumberOfFlet))
       };
@@ -92,15 +116,28 @@ var document_onload = function() {
       mode: 'plot'
     },
     methods: {
+      onClickPlot: function(plot, target) {
+        if (this.mode === 'plot') {
+          this.togglePlot(plot, target);
+        } else if (this.mode === 'editText' && plot.display === 'show') {
+          this.editText(plot, target);
+        } else {
+          return;
+        }
+      },
       togglePlot: function(plot, target) {
-        debugger;
         if (plot.display === 'hide') {
           plot.display = 'show';
           target.style.background = this.plotColor;
         } else {
           plot.display = 'hide';
           target.style.background = '';
+          plot.text = '';
         }
+      },
+      editText: function(plot, target) {
+        debugger;
+        plot.edit = true;
       }
     }
   });

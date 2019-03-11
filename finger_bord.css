@@ -107,14 +107,23 @@ footer {
 .finger-plot .string-course .plot.hide:hover {
     border: 1px black dotted;
 }
-.finger-plot .string-course .plot.hide span {
+.finger-plot .string-course .plot.hide input {
     display: none;
 }
 .finger-plot .string-course .plot.show {
     border: 1px black solid;
 }
+.finger-plot .string-course .plot.show input {
+    display: block;
+    line-height: 25px;
+    width: 25px;
+    pointer-events: none;
+    text-align: center;
+}
 .finger-plot .string-course .plot.show span {
     display: block;
     line-height: 50px;
+    width: 50px;
     pointer-events: none;
+    text-align: center;
 }

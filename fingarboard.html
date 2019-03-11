@@ -19,7 +19,7 @@
                 <div class="FB-section">
                     <div class="left-items">
                         <!-- <button>弦の数</button> -->
-                        <!-- <select-mode v-model="mode"></select-mode> -->
+                        <select-mode v-model="mode"></select-mode>
                         <color-picker v-model="plotColor"></color-picker>
                         <!-- <button>画像として保存</button> -->
                     </div>
@@ -34,7 +34,7 @@
                             <finger-plots
                                 v-for="numberOfString in numberOfStrings"
                                 v-bind:plot-map="numberOfString.plotMap"
-                                v-bind:toggle-plot="togglePlot"
+                                v-bind:on-click-plot="onClickPlot"
                                 v-bind:key="numberOfString.key"
                             >
                             </finger-plots>
